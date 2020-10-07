@@ -48,11 +48,12 @@
 							<article class="post featured">
 								<header class="major">
 									<h2><a href="#">Game Project 1: Fruit Knight</a></h2>
-									<p>This was the first game project we did at Future Games. Our group was a team of 6 people, 3 programmers and 3 2D artists.
+									<p>This was the first game project we did at Future Games. Our group was a team of 6 people, 3 programmers and 3 2D artists.</p>
+									<p1>Our programmers were: Matthew Garcés, Joakim Lembke, Grimm Svenkerud.</p1> <p2> Our 2D artists were: Karl Erhnström, Sofia Liljefors, Sebastian Berglöv
 
-									</p>
+									</p2>
 								</header>
-								<a href="#" class="image"><img src="images/nedladdning.jpg" alt="" /></a>
+								<a href="#" class="image"><img src="images/FruitKnight.png" widht = "400" height ="600" alt="Logo" /></a>
 								<ul class="actions special">
 								</ul>
 							</article>
@@ -62,8 +63,163 @@
 									<header>
 										<h2><a href="#">Project 1: Fruit Knight</a></h2>
 									</header>
-									<a href="#" class="image fit"><img src="images/FruitKnight.png" alt="" /></a>
-									<p>This was the first project we did in futuregames and our Theme were to combine two arcade like games.</p>
+									
+									<p>On this project I worked on the "boos", or in this case the skeletons. The project lasted for a little less than 2 weeks. 
+										It was quite intresting since I had never done AI such as this. 
+										The only game I had made prior to this is a simple platformer with "AI" only moving back and forth between 2 walls.
+
+									</p>
+									<details>
+										<summary>Ghost Controller</summary>
+										<pre>
+										<code style="font-size: 14px">
+											using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GhostController : MonoBehaviour
+{
+
+    public Rigidbody2D rigidBody2d;
+    public CircleCollider2D cCollider2d;
+    public Animator myAnim;
+    public float speed = 1.0f; //Speed of the enemy
+    public Vector2 direction = Vector2.up; //Direction of the enemy
+
+    private float changeDirectionTime; // the soonest time enemy change direction
+    public Direction enDirection;
+
+    void Start()
+    {
+        //Get the RidgidBody2D of the enemy
+        rigidBody2d = GetComponent<Rigidbody2D>();
+        //Get the CircleCollider of the enemy 
+        cCollider2d = GetComponent<CircleCollider2D>();
+        //Set Animator
+        myAnim = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        //Wall detection
+        if (!openDirection(direction))
+        {
+            if (canChangeDirection())
+            {
+                changeDirection();
+            }
+            else if (rigidBody2d.velocity.magnitude < speed)
+            {
+                changeDirectionAtRandom();
+            }
+        }
+
+        //Intersection
+        else if (canChangeDirection() && Time.time > changeDirectionTime)
+        {
+            changeDirectionAtRandom();
+        }
+        //stuck on non wall
+        else if (rigidBody2d.velocity.magnitude < speed)
+        {
+            changeDirectionAtRandom();
+        }
+        //Rotate eyes
+        foreach (Transform t in GetComponentInChildren<Transform>())
+        {
+            if(t != transform)
+            {
+                t.up = direction;
+            }
+        }
+        // Move
+        rigidBody2d.velocity = direction * speed;
+        if (rigidBody2d.velocity.x == 0)
+        {
+            transform.position = new Vector2(Mathf.Round(transform.position.x), transform.position.y);
+        }
+        if (rigidBody2d.velocity.y == 0)
+        {
+            transform.position = new Vector2(transform.position.x, Mathf.Round(transform.position.y) + 0.3f);
+        }
+    }
+
+    private bool openDirection(Vector2 direction)
+    {
+        RaycastHit2D[] rayHits = new RaycastHit2D[10];
+        cCollider2d.Cast(direction, rayHits, 0.1f, true);
+        foreach (RaycastHit2D rayHit in rayHits)
+        {
+            if (rayHit && rayHit.collider.gameObject.layer == 10)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool canChangeDirection()
+    {
+        Vector2 perpRight = Utility.PerpendicularRight(direction);
+        bool openRight = openDirection(perpRight);
+        Vector2 perpLeft = Utility.PerpendicularLeft(direction);
+        bool openLeft = openDirection(perpLeft);
+        return openRight || openLeft;
+    }
+
+    private void changeDirectionAtRandom()
+    {
+        changeDirectionTime = Time.time + 1;
+        if (Random.Range(0, 2) == 0)
+        {
+            changeDirection();
+        }
+    }
+
+    private void changeDirection()
+    {
+        changeDirectionTime = Time.time + 1;
+        Vector2 perpRight = Utility.PerpendicularRight(direction);
+        bool openRight = openDirection(perpRight);
+        Vector2 perpLeft = Utility.PerpendicularLeft(direction);
+        bool openLeft = openDirection(perpLeft);
+        if (openRight || openLeft)
+        {
+            int choice = Random.Range(0, 2);
+            if (!openLeft || (choice == 0 && openRight))
+            {
+                direction = perpRight;
+            }
+            else
+            {
+                direction = perpLeft;
+            }
+        }
+        else
+        {
+            direction = -direction;
+        }
+        if (direction.y == -1)
+        {
+            enDirection = Direction.Down;
+        }
+        else if (direction.y == 1)
+        {
+            enDirection = Direction.Up;
+        }
+        else if (direction.x == 1)
+        {
+            enDirection = Direction.Right;
+        }
+        else if (direction.x == -1)
+        {
+            enDirection = Direction.Left;
+        }
+        myAnim.SetInteger("Direction", (int)enDirection);
+    }
+}
+</code>
+</pre>
 									<ul class="actions special">
 									</ul>
 								</article>

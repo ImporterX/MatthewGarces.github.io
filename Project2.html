@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Portfolio Matthew Garcés/T.E.G</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>T.E:G<br />
+						</h1>
+						<ul class="actions">
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li ><a href="index.html">Home</a></li>
+
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-linkedin"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									<h2><a href="#">Game Project 2: T.E:G</a></h2>
+									<p>Our second project lasted for 4 weeks and it had to contain at least 2 sports. Our team was composed of 14 people. Terminal Extraction Game or T.E.G contains 2 players which can play on the same computer with either split screen or seperate screens.
+                                        The goal of the game is to collect 5 batteries spread through out the map and then return them to the Extraction tower. However, since our 2 sports were orientation and ultimate tag, obly the one who isnt "it" can collect the batteries.
+                                        the "it" person have to hunt after the collector and tag him, while the hunter keeps gaining passively increased speed. when the copllector is tag, the new "it" gets a white screen and is stunned for a 3 second duration.
+                                        In the case the tagged person dont know where the collector is, the tagged person may use a special ability which shoots up a beam in the sky that reveals where the collector is.
+                                        The collector also have an escape ability whereas the collector creates copies of him/herself that run randomly in all directions, to confuse the hunter.
+
+
+                                    </p>
+									<p1>Our programmers were: Matthew Garcés, Kevin Cederqvist, Roy Lövfendahl.</p1> <p2> Our 2D artists were: Carl Ljungsberg, Niklas Wallén. 
+                                    </p2>
+                                <p3> Our 3D artists: John Alberg, Elina Nitsan, Adrian Sitek, Sara Åkerström.</p3>
+                                <p4> Our Desingers: Fannie Lorant, Henrik Johansson, Love Åkerlund.</p4>
+                                <p5> Our sound developers: Kenny Gustavsson, Kevin Breton.</p5>
+								</header>
+								<a href="#" class="image"><img src="images/TEG.jpg" widht = "400" height ="600" alt="Logo" /></a>
+								<ul class="actions special">
+								</ul>
+							</article>
+
+						
+								<article>
+									<header>
+										<h2><a href="#">Project 2: T.E.G</a></h2>
+									</header>
+									
+									<p>In this prohect we used blueprints, because we were not experienced enough in c++. The project were made in Unreal Engine 4. We did a little bit of coding, but we cut it out, because it messed up the project.
+                                        However in the project I did play around with Movement in C++ and a Dash ability. Code for the dash ability is sadly gone with time and have been removed from my drives.
+                                        What I learn from that was to work it in to another project im currently solo on, which is for the sole purpose to learn c++.
+
+									</p>
+									<details>
+										<summary>Character Movement</summary>
+                                        <pre>
+                                            <code style="font-size: 14px">
+                                                // Fill out your copyright notice in the Description page of Project Settings.
+
+#include "GameFramework/Character.h"
+#include "ShooterCharacter.h"
+#include "CoreMinimal.h"
+#include "Gun.h"
+
+// Sets default values
+AShooterCharacter::AShooterCharacter()
+{
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+}
+
+// Called when the game starts or when spawned
+void AShooterCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	GetWorld()->SpawnActor<AGun>;
+	
+}
+
+// Called every frame
+void AShooterCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+// Called to bind functionality to input
+void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AShooterCharacter::MoveForward);
+	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AShooterCharacter::MoveRight);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+}
+
+void AShooterCharacter::MoveForward(float AxisValue)
+{
+	AddMovementInput(GetActorForwardVector() * AxisValue);
+}
+
+void AShooterCharacter::MoveRight(float AxisValue)
+{
+	AddMovementInput(GetActorRightVector() * AxisValue);
+}
+
+/*void AShooterCharacter::LookUp(float AxisValue)
+{
+//Referance to AddControllerPitchInput.
+	AddControllerPitchInput(AxisValue);
+}
+
+void AShooterCharacter::LookRight(float AxisValue)
+{
+	AddControllerYawInput(AxisValue);
+}*/
+
+
+
+
+</code>
+</pre>
+									<ul class="actions special">
+									</ul>
+								</article>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+
+						</section>
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Kanslivägen 15, 146 37 <br />
+								Tullinge</p>
+							</section>
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">+46 73 986 73 73</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">Mattias.Garces92@gmail.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+
+									<li><a href="#" class="icon brands alt fa-linkedin"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
